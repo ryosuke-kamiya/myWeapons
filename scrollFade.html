@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>scrollFade</title>
+</head>
+<style>
+	img{
+		width: 100px;
+		height: 100px;
+	}
+
+	.jsc-fade-animation {
+	opacity: 0;
+	}
+
+	.jsc-fade-animation-delay {
+		opacity: 0;
+	}
+
+	.fade-animation-in {
+		animation-name: fade-animation-in;
+		animation-duration: 1.5s;
+		animation-timing-function: cubic-bezier(0.25, 0.25, 0.1, 1);
+		animation-iteration-count: 1;
+		animation-direction: normal;
+		animation-fill-mode: forwards;
+	}
+
+	.fade-animation-in-delay {
+		animation-name: fade-animation-in;
+		animation-duration: 1.5s;
+		animation-delay: 1s;
+		animation-timing-function: cubic-bezier(0.25, 0.25, 0.1, 1);
+		animation-iteration-count: 1;
+		animation-direction: normal;
+		animation-fill-mode: forwards;
+	}
+
+	@keyframes fade-animation-in {
+		0% {
+			opacity: 0;
+			transform: translate3d(0, 40px, 0);
+		}
+		100% {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+		}
+	}
+</style>
+<body>
+	<h1 class="jsc-fade-animation">
+		タイトル
+	</h1>
+	<div class="jsc-fade-animation">
+		<img src="/sampleimg/sample1.jpg" alt="">
+		<img src="/sampleimg/sample2.jpg" alt="">
+		<img src="/sampleimg/sample3.jpg" alt="">
+		<h2 class="jsc-fade-animation-delay">hahaha</h2>
+	</div>
+	<script src="jquery-3.3.1.min.js"></script>
+  <script>
+	//コンストラクタバージョン
+	var FADEANIME = function($fadeIn){
+		this.$fadeIn = $fadeIn;
+		// this.headerHight = $('.jsc-header').height();
+		this.windowHeight = $(window).height();
+		this.init();
+		this.animateContent();
+	};
+	FADEANIME.prototype = {
+		init: function () {
+			this.offset = this.$fadeIn.offset();
+			this.top = this.offset.top //-this.headerHight;
+			var myself = this;
+			$(window).on('scroll', function(){myself.animateContent();})
+		},
+		animateContent: function(){
+			this.windowTop = $(window).scrollTop();
+			this.fadeInPoint =this.windowTop + this.windowHeight*4/5;
+			if (this.fadeInPoint > this.top) {
+				this.$fadeIn.addClass("fade-animation-in");
+				this.$fadeIn.find('.jsc-fade-animation-delay').addClass('fade-animation-in-delay');
+				console.log(this.$fadeIn.find('.jsc-fade-animation-delay'));
+			}
+		}
+	};
+	$(window).on('load resize', function () {
+		$('.jsc-fade-animation').each(function(){
+			new FADEANIME($(this));
+		});
+	});
+	// eachメソッドバージョン
+	// var FadeAnime = {
+	// 		init: function () {
+	// 				$(window).on('load scroll resize', function () {
+	// 						var $window = $(this);
+	// 						var windowTop = $window.scrollTop();
+	// 						var windowBottom = windowTop + $window.height();
+	// 						var $trigger = $('.jsc-fade-animation');
+	// 						var headerHight = $('.jsc-header').height();
+	// 						$trigger.each(function () {
+	// 								let offset = $(this).offset();
+	// 								let top = offset.top - headerHight;
+	// 								if (windowBottom > top) {
+	// 										$(this).addClass("fade-animation-in");
+	// 								}
+	// 						})
+	// 				})
+	// 		}
+	// };
+  </script>
+</body>
+</html>

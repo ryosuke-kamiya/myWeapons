@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>hoverAnimation</title>
+</head>
+<style>
+	.img-wrapper{
+		position: relative;
+		cursor: pointer;
+		width: 180px;
+		height: 180px;
+		border-radius: 50%;
+	}
+
+	.img{
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+	}
+
+	.img-wrapper::before {
+		background-color: #03C4EB;
+		content: "";
+		display: none;
+		opacity: 0.7;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	.img-wrapper::after {
+		content: 'name';
+		font-size: 24px;
+		color: #F5F5F5;
+		font-family: 'Caveat', cursive;
+		display: none;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform-origin: 50% 50% 0;
+		transform: translate(-50%, -50%) rotate(355deg);
+	}
+
+	.img-wrapper:hover::before{
+		display: block;
+	}
+
+	.img-wrapper:hover::after{
+		display: block;
+		animation: rotate 1s 0s ;
+	}
+
+	@keyframes rotate {
+		0%{
+			transform:translate(-50%, -50%) rotate(355deg) rotateY(180deg);
+		}
+		100%{
+			transform:translate(-50%, -50%) rotate(355deg) rotateY(360deg);
+		}
+	}
+</style>
+<body>
+	<div class="img-wrapper">
+		<img class="img" src="sampleimg/sample1.jpg" alt="写真">
+	</div>
+</body>
+</html>

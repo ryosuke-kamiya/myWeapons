@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="/reset.css">
+		<title>Accordion</title>
+	</head>
+	<style>
+	.accordion-content {
+		max-width: 1024px;
+		margin: 0 auto;
+	}
+	.accordion-header {
+		background-color: #db0f2f;
+		color: #fff;
+		font-size: 26px;
+		font-weight: bold;
+		padding: 20px 11%;
+		text-align: center;
+		position: relative;
+		cursor: pointer;
+		transition-duration: 0.2s;
+	}
+	.accordion-content:nth-of-type(2) .accordion-header {
+		background-color: #ff9a05;
+	}
+	.accordion-content:nth-of-type(3) .accordion-header {
+		background-color: #1c85d8;
+	}
+	.accordion-header:hover {
+		opacity: .8;
+	}
+	.accordion-box {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		top: 50%;
+		right: 5%;
+		width: 40px;
+		height: 40px;
+		border: 1px solid #fff;
+		margin-top: -20px;
+		transform: rotate(45deg);
+		transform-origin: center center;
+		transition-duration: 0.2s;
+	}
+	.accordion-box-line {
+		display: block;
+		width: 18px;
+		height: 18px;
+		transform: rotate(45deg);
+		transform-origin: center center;
+		transition-duration: 0.2s;
+		position: relative;
+	}
+	.accordion-header.is-open .accordion-box {
+		transform: rotate(-360deg);
+	}
+	.accordion-box-line:before, .accordion-box-line:after {
+		display: flex;
+		content: '';
+		background-color: #fff;
+		border-radius: 10px;
+		width: 18px;
+		height: 4px;
+		position: absolute;
+		top: 7px;
+		left: 0;
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+		transform-origin: center center;
+	}
+	.accordion-box-line:before {
+		width: 4px;
+		height: 18px;
+		top: 0;
+		left: 7px;
+	}
+	.accordion-header.is-open .accordion-box .accordion-box-line:before {
+		content: none;
+	}
+	.accordion-header.is-open .accordion-box .accordion-box-line:after {
+		transform: rotate(-45deg);
+	}
+	.accordion-inner {
+		height: 300px;
+		display: none;
+		padding: 30px 30px;
+		border-left: 2px solid #db0f2f;
+		border-right: 2px solid #db0f2f;
+		border-bottom: 2px solid #db0f2f;
+	}
+	.accordion-content:nth-of-type(2) .accordion-inner {
+		border-left: 2px solid #ff9a05;
+		border-right: 2px solid #ff9a05;
+		border-bottom: 2px solid #ff9a05;
+	}
+	.accordion-content:nth-of-type(3) .accordion-inner {
+		border-left: 2px solid #1c85d8;
+		border-right: 2px solid #1c85d8;
+		border-bottom: 2px solid #1c85d8;
+	}
+	.accordion-inner-text {
+		margin: 0;
+	}
+	@media screen and (max-width: 1024px) {
+		.accordion-header {
+				font-size: 18px;
+		}
+		.accordion-box {
+				width: 30px;
+				height: 30px;
+				margin-top: -15px;
+		}
+	}
+	@media screen and (max-width: 767px) {
+		.accordion-header {
+				font-size: 16px;
+				text-align: left;
+				padding: 15px 60px 15px 15px;
+		}
+	}
+	</style>
+	<body>
+		<ul class="accordion-wrapper">
+			<li class="accordion-content">
+				<div class="accordion-header">アコーディオン、シンプル版
+					<div class="accordion-box"><span class="accordion-box-line"></span></div>
+				</div>
+				<div class="accordion-inner">
+					<p class="accordion-inner-text">アコーディオンの中身です。</p>
+				</div>
+			</li>
+			<li class="accordion-content">
+				<div class="accordion-header">アコーディオン、シンプル版
+					<div class="accordion-box"><span class="accordion-box-line"></span></div>
+				</div>
+				<div class="accordion-inner">
+					<p class="accordion-inner-text">アコーディオンの中身です。</p>
+				</div>
+			</li>
+			<li class="accordion-content">
+				<div class="accordion-header">アコーディオン、シンプル版
+					<div class="accordion-box"><span class="accordion-box-line"></span></div>
+				</div>
+				<div class="accordion-inner">
+					<p class="accordion-inner-text">アコーディオンの中身です。</p>
+				</div>
+			</li>
+		</ul>
+		<script src="jquery-3.3.1.min.js"></script>
+		<script>
+			var moveAccordion ={
+			init: function () {
+				this.setParameters();
+				this.bindEvents();
+			},
+			setParameters: function () {
+				this.$toggle = $('.accordion-header');
+			},
+			bindEvents: function () {
+				var myself = this;
+				this.$toggle.on('click',function(){
+					myself.openInner($(this));
+				});
+			},
+			openInner: function ($this) {
+				if($this.next('.accordion-inner').is(':animated')) return;
+				$this.next('.accordion-inner').slideToggle();
+				$this.toggleClass("is-open");
+				}
+			};
+
+			$(window).on('load', function () {
+				moveAccordion.init();
+			});
+		</script>
+	</body>
+</html>

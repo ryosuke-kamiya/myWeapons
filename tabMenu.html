@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="/reset.css">
+		<title>tabMenu</title>
+	</head>
+	<style>
+		/*最低限タブが機能するのに必要なスタイル*/
+		.tab-item {
+			display: none;
+		}
+
+		.tab-item-active {
+			display: block;
+		}
+
+		/*ここから下は見た目だけ*/
+		a {
+			display: block;
+			color: inherit;
+			text-decoration: none;
+		}
+
+		.tab-btn {
+			font-size: 24px;
+			padding: 5px;
+			border-bottom: solid 1px #E0F2F7;
+			display: inline-block;/*flexでも調整すれば可能*/
+			background-color: #E0F2F7;
+			opacity: 0.5;
+			border-radius: 5px 5px 0 0;
+		}
+
+		.tab-active {
+			opacity: 1;
+			border-bottom: solid 1px #E0F2F7;
+			color: #00BFFF;
+		}
+
+		.tab-item {
+			width: 400px;
+			height: 300px;
+			padding: 5px;
+			color: #00BFFF;
+			background-color: #E0F2F7;
+		}
+
+	</style>
+	<body>
+		<!-- タブのボタン部分 -->
+		<a class="tab-btn jsc-tab-btn tab-active" href="#item1">タブ1</a>
+		<a class="tab-btn jsc-tab-btn" href="#item2">タブ2</a>
+		<a class="tab-btn jsc-tab-btn" href="#item3">タブ3</a>
+
+		<!-- タブのコンテンツ部分 -->
+		<div class="tab-item jsc-tab-item tab-item-active" id="item1">1番目のコンテンツ</div>
+		<div class="tab-item jsc-tab-item" id="item2">2番目のコンテンツ</div>
+		<div class="tab-item jsc-tab-item" id="item3">3番目のコンテンツ</div>
+
+		<script src="jquery-3.3.1.min.js"></script>
+		<script>
+			var tabAction = {
+				init: function () {
+					this.setParams();
+					this.bindEvent();
+				},
+				setParams: function () {
+					this.$tabBtn = $('.jsc-tab-btn');
+					this.$tabItem = $('.jsc-tab-item');
+				},
+				bindEvent: function () {
+					var myself = this;
+					this.$tabBtn.on('click', function() {
+						myself.tabOpen($(this));
+					});
+				},
+				tabOpen: function ($this) {
+					this.$tabItem.removeClass("tab-item-active");
+					$($this.attr("href")).addClass("tab-item-active");
+					this.$tabBtn.removeClass('tab-active');
+					$this.addClass('tab-active');
+				}
+			}
+			$(window).on('load', function () {
+				tabAction.init();
+			})
+		</script>
+	</body>
+</html>

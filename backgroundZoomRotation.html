@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="/reset.css">
+		<title>backgroundZoomRotation</title>
+	</head>
+	<style>
+		.top-visual-text {
+			position: relative;
+		}
+
+		.top-kv-box {
+			position: absolute;
+			width: 400px;
+			top: 100px;
+			left: 15%;
+			z-index: 3;
+		}
+
+		.top-kv-text {
+			color: green;
+			position: relative;
+		}
+
+		.top-title {
+			font-size: 64px;
+		}
+
+		.top-and {
+			position: absolute;
+			top: 20px;
+			left: -10px;
+			font-size: 70px;
+			color: #707070;
+			z-index: -1;
+		}
+
+		.top-title-plus {
+			position: absolute;
+			font-size: 64px;
+			text-align: left;
+			width: 100%;
+			top: 70px;
+			left: 0px;
+			opacity: 0;
+		}
+
+		.top-visual-kv {
+			height: 480px;
+			width: 100%;
+			overflow: hidden;
+			position: relative;
+			z-index: 0;
+		}
+
+		.top-img {
+			opacity: 0;
+			width: 100%;
+			height: 100%;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			position: absolute;
+			left: 0;
+			top: 0;
+			opacity: 0;
+		}
+
+	</style>
+	<body>
+		<div class="top-visual-text">
+			<div class="top-kv-box">
+				<div class="top-kv-text">
+					<h1 class="top-title">固定タイトル</h1>
+					<span class="top-and">&</span>
+					<span class="top-title-plus jsc-kv-text">タイトル１</span>
+					<span class="top-title-plus jsc-kv-text">タイトル２</span>
+					<span class="top-title-plus jsc-kv-text">タイトル３</span>
+				</div>
+			</div>
+		</div>
+		<div class="top-visual-kv">
+			<div class="top-img jsc-kv-img" style="background-image: url(sampleimg/sample1.jpg)"></div>
+			<div class="top-img jsc-kv-img" style="background-image: url(sampleimg/sample2.jpg)"></div>
+			<div class="top-img jsc-kv-img" style="background-image: url(sampleimg/sample3.jpg)"></div>
+		</div>
+		<script src="jquery-3.3.1.min.js"></script>
+		<script>
+			var topAnimation = {
+				init: function () {
+					this.setParameters();
+					this.bindEvents();
+				},
+				setParameters: function () {
+					this.$kvImage = $('.jsc-kv-img');
+					this.$kvText = $('.jsc-kv-text');
+					this.kvCount = this.$kvImage.length;
+					this.textCount = this.$kvText.length;//３秒で完全に現れて、６秒から消え始め、９秒で完全に消える。
+					$('<style>@keyframes img-anime{0%{opacity: 0;}'+300/(this.kvCount*6)+'%{opacity: 1;}'+600/(this.kvCount*6)+'%{opacity: 1;}'+900/(this.kvCount*6)+'%{opacity: 0;transform: scale(1.2);z-index: 2;}100%{opacity: 0;}</style>').appendTo('head');
+					$('<style>@keyframes text-anime{0%{opacity: 0;}'+300/(this.textCount*6)+'%{opacity: 0.8;}'+600/(this.textCount*6)+'%{opacity: 1;}'+900/(this.textCount*6)+'%{opacity: 0;z-index: 2;}100%{opacity: 0;}</style>').appendTo('head');
+				},
+				bindEvents: function () {
+					this.imgAnimation();
+					this.imgDelayAnimation();
+					this.textAnimation();
+					this.textDelayAnimation();
+				},
+				imgAnimation: function () {
+					if(this.$kvImage.length == 1){
+						this.$kvImage.css('opacity', '1');
+						return;
+					}
+					this.$kvImage.css('-webkit-animation', 'img-anime '+ 6 * this.kvCount + 's' +' 0s infinite')
+					this.$kvImage.css('animation', 'img-anime '+ 6 * this.kvCount + 's' +' 0s infinite')
+				},
+				imgDelayAnimation: function () {
+					for(i=0; i<this.$kvImage.length; i++){
+						this.$kvImage.eq(i).css('-webkit-animation-delay', 6 * i+ 's')
+						this.$kvImage.eq(i).css('animation-delay',6 * i+ 's')
+					}
+				},
+				textAnimation: function () {
+					if(this.$kvText.length == 1){
+						this.$kvText.css('opacity', '1');
+						return;
+					}
+					this.$kvText.css('-webkit-animation', 'text-anime '+ 6 * this.textCount + 's' +' 0s infinite')
+					this.$kvText.css('animation', 'text-anime '+ 6 * this.textCount + 's' +' 0s infinite')
+				},
+				textDelayAnimation: function () {
+					for(i=0; i<this.$kvText.length; i++){
+						this.$kvText.eq(i).css('-webkit-animation-delay', 6 * i+ 's')
+						this.$kvText.eq(i).css('animation-delay',6 * i+ 's')
+					}
+				}
+			};
+			$(window).on('load', function () {
+				topAnimation.init();
+			});
+		</script>
+	</body>
+</html>

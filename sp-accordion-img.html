@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<link rel="stylesheet" href="/reset.css">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Accordion</title>
+	</head>
+	<style>
+	body{
+		text-align: center;
+	}
+
+	.member {
+		position: relative;
+	}
+
+	.member-list {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.member-list>li {
+		padding: 16px 26px;
+		width: 33%;
+	}
+
+	.member-list-first>li {
+		width: 50%;
+	}
+
+	.member-img-wrapper {
+		position: relative;
+		width: 180px;
+		height: 180px;
+		border-radius: 50%;
+		margin: auto;
+		-webkit-perspective: 500px;
+		perspective: 500px;
+	}
+
+	.member-img {
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+	}
+
+	.active{
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: none;
+	}
+
+	.member-img-wrapper::before {
+		background-color: #03C4EB;
+		content: "";
+		display: none;
+		opacity: 0.7;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 2;
+	}
+
+	.member-img-wrapper::after {
+		font-size: 24px;
+		color: #F5F5F5;
+		display: none;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform-origin: 50% 50% 0;
+		transform: translate(-50%, -50%) rotate(355deg);
+		width: 100%;
+		z-index: 3;
+	}
+	.name-original-1::after {
+	content: 'original1';
+	}
+	.name-original-2::after {
+	content: 'original2';
+	}
+	.name-original-3::after {
+	content: 'original3';
+	}
+	@keyframes rotate {
+		0%{
+				transform:translate(-50%, -50%) rotate(355deg) rotateY(180deg);
+		}
+		100%{
+				transform:translate(-50%, -50%) rotate(355deg) rotateY(360deg);
+		}
+	}
+
+	.toggle-member-text {
+		margin-top: 24px;
+	}
+
+	.member-name {
+		color: red;
+		font-size: 20px;
+		margin-top: 12px;
+	}
+
+	.member-icon>img {
+		width: 50%;
+	}
+
+	.member-accordion {
+		margin-top: 24px;
+	}
+
+	.member-profile {
+		line-height: 1.875;
+		text-align: left;
+	}
+
+	@media screen and (min-width: 751px) {
+		.accordion-inner {
+		display: block !important;
+		}
+
+		.member-icon {
+			display: none;
+		}
+
+		.member-img-wrapper:hover::before{
+			display: block;
+		}
+
+		.member-img-wrapper:hover::after{
+			display: block;
+			animation: rotate 1s;
+			-webkit-animation: rotate 1s;
+		}
+
+		.member-img-wrapper:hover > .active{
+			display: block;
+		}
+	}
+	@media screen and (max-width: 750px) {
+		.section-content.member-content {
+		margin-top: 40px;
+		padding-left: 15px;
+		}
+
+		.member-list {
+			flex-direction: column;
+		}
+
+		.member-list>li {
+			padding: 20px 0 0;
+			width: 100%;
+		}
+
+		.member-logo {
+			width: 158px;
+			top: -30px;
+			left: -15px;
+		}
+
+		.member-box {
+			width: 100%;
+			padding: 0;
+		}
+
+		.toggle-member {
+			position: relative;
+			display: flex;
+			align-items: center;
+			margin: auto;
+			z-index: +1;
+			cursor: pointer;
+			transition-duration: 0.2s;
+			transition: opacity 0.3s （cubic-bezier(0.25, 0.25, 0.1, 1)）;
+		}
+
+		.member-img-wrapper {
+			max-height: 80px;
+			cursor: pointer;
+			max-width: 80px;
+		}
+
+		.member-img-wrapper::after {
+			font-size: 12px;
+		}
+
+		.toggle-member-text {
+			width: calc(190 / 350 *100%);
+			margin-top: 0;
+			margin-left: calc(30 / 350 * 100%);
+			text-align: left;
+		}
+
+		.member-name {
+			font-size: 18px;
+			margin-top: 0;
+		}
+
+		.is-open >.member-img-wrapper::before{
+			display: block;
+		}
+
+		.is-open >.member-img-wrapper::after{
+			display: block;
+			animation: rotate 1s 0s;
+		}
+
+		.toggle-member.is-open .member-icon {
+			transform: rotate(180deg);
+		}
+
+		.toggle-member.is-open .active{
+			display: block;
+		}
+
+		.member-accordion {
+			margin-top: 16px;
+		}
+
+		.accordion-inner {
+			display: none;
+		}
+
+		.member-profile {
+			text-align: left;
+		}
+	}
+	</style>
+	<body>
+		<ul class="member-list">
+			<li>
+				<div class="toggle-member">
+					<div class="member-img-wrapper name-original-1">
+						<img class="member-img" src="/sampleimg/sample1.jpg" alt="イメージ１">
+						<img class="active" src="/sampleimg/sample5.jpg" alt="イメージ１−２">
+					</div>
+					<div class="toggle-member-text">
+						<p class="member-post">役職</p>
+						<p class="member-name">名前 名前</p>
+					</div>
+					<div class="member-icon">
+						<img src="/sampleimg/toggle-icon.png" alt="toggle-icon">
+					</div>
+				</div>
+				<div class="member-accordion accordion-inner">
+					<p class="member-profile">説明が入ります</p>
+				</div>
+			</li>
+			<li>
+				<div class="toggle-member">
+					<div class="member-img-wrapper name-original-2">
+						<img class="member-img" src="/sampleimg/sample2.jpg" alt="イメージ２">
+						<img class="active" src="/sampleimg/sample5.jpg" alt="イメージ２-2">
+					</div>
+					<div class="toggle-member-text">
+						<p class="member-post">役職</p>
+						<p class="member-name">名前 名前</p>
+					</div>
+					<div class="member-icon">
+						<img src="/sampleimg/toggle-icon.png" alt="toggle-icon">
+					</div>
+				</div>
+				<div class="member-accordion accordion-inner">
+					<p class="member-profile">説明が入ります</p>
+				</div>
+			</li>
+			<li>
+				<div class="toggle-member">
+					<div class="member-img-wrapper name-original-3">
+						<img class="member-img" src="/sampleimg/sample3.jpg" alt="イメージ3">
+						<img class="active" src="/sampleimg/sample5.jpg" alt="イメージ3-2">
+					</div>
+					<div class="toggle-member-text">
+						<p class="member-post">役職</p>
+						<p class="member-name">名前 名前</p>
+					</div>
+					<div class="member-icon">
+						<img src="/sampleimg/toggle-icon.png" alt="toggle-icon">
+					</div>
+				</div>
+				<div class="member-accordion accordion-inner">
+					<p class="member-profile">説明が入ります</p>
+				</div>
+			</li>
+		</ul>
+		<script src="jquery-3.3.1.min.js"></script>
+		<script>
+			//ここから
+			var spAction = {
+				init: function(){
+					this.setParameters();
+					this.bindEvents();
+				},
+				setParameters: function () {
+					this.brakePoint = 750;
+				},
+				bindEvents: function(){
+					this.judge();
+				},
+				judge: function () {
+					if($(window).width() <= this.brakePoint){
+						return true;
+					}else{
+						return false;
+					};
+				}
+			}
+			//ここまでは、spの判定
+
+			var moveAccordion ={
+			init: function () {
+				this.setParameters();
+				this.bindEvents();
+			},
+			setParameters: function () {
+				this.$toggle = $('.toggle-member');
+			},
+			bindEvents: function () {
+				var myself = this;
+				this.$toggle.on('click',function(){
+					myself.openInner($(this));
+				});
+			},
+			openInner: function ($this) {
+				if(!spAction.judge()) return;
+				if($this.next('.accordion-inner').is(':animated')) return;
+				$this.next('.accordion-inner').slideToggle();
+				$this.toggleClass("is-open");
+				}
+			};
+
+			$(window).on('load', function () {
+				spAction.init();
+				moveAccordion.init();
+			});
+		</script>
+	</body>
+</html>

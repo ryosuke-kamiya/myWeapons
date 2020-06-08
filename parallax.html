@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<script src="jquery-3.3.1.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>parallax</title>
+		<style>
+			body {
+			height: 5000px;
+			}
+			.parallax-window{
+				height: 400px;
+				padding: 160px 50px 0 50px;
+				overflow: hidden;
+				position: relative;
+				z-index: -2;
+			}
+			.parallax-bg {
+				background: url(sampleimg/sample1.jpg);
+				height: 800px;/*ここで％を使って倍率を上げるか、pxで高さを指定する*/
+				position: absolute;
+				bottom: 0px;
+				left: 0px;
+				width: 100%;
+				display: block;
+				background-position: bottom;
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-attachment: scroll;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>parallax-bgを別々に動かす</h1>
+		<div class="parallax-window jsc-parallax-window">
+			<div class="parallax-bg jsc-parallax-bg"></div>
+		</div>
+		<script>
+			var parallax ={
+				init: function(){
+					this.setParameters();
+					var myself = this;
+					$(window).on('resize',function(){
+						myself.setParameters();
+					});
+					this.bindEvents();
+				},
+				setParameters: function () {
+					this.$window = $(window);
+					this.windowHeight = this.$window.height();
+					//this.headerHight = $('.jsc-header').height();
+					this.offset = $('.jsc-parallax-window').offset();
+					this.top = this.offset.top //-this.headerHight;
+					this.parallaxHeight = $('.jsc-parallax-window').outerHeight();
+					this.bottom = this.top + this.parallaxHeight;
+				},
+				bindEvents: function () {
+					var myself = this;
+					this.$window.scroll(function() {
+						myself.parallaxAnimation();
+					})
+				},
+				parallaxAnimation: function () {
+					this.scrollTop = this.$window.scrollTop();
+					this.scrollBottom = this.scrollTop+this.windowHeight;
+					$('.jsc-parallax-bg').css('transform', 'translateY(' + parseInt(this.scrollBottom - this.bottom)/2 + 'px)');
+				}
+			};
+
+			$(window).on('load', function () {
+				parallax.init();
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,220 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title>exercise5</title>
+		<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+		<style type="text/css">
+			.outer-wrapper{
+				margin: 30px auto;
+				padding: 0;
+				width: 1280px;
+				overflow: hidden;
+			}
+			.carousel-wrapper{
+				position: relative;
+				width: 100%;
+				height: 400px;
+				overflow: hidden;
+			}
+			.indicator-wrapper{
+				list-style: none;
+				width: 100%;
+				margin: 0;
+				padding: 0;
+				text-align: center;
+			}
+			.indicator-wrapper > li{
+				display: inline-block;
+				margin: 16px;
+				padding: 0;
+				width: 16px;
+				height: 16px;
+			}
+			.indicator-wrapper > li > a{
+				display: inline-block;
+				box-sizing: border-box;
+				width: 100%;
+				height: 100%;
+				border: solid 1px rgb(0, 100, 200);
+				border-radius: 8px;
+				text-indent: -9999;
+			}
+			.indicator-wrapper > li > a.current{
+				background-color: rgb(0, 100, 200);
+			}
+			.container{
+				position: absolute;
+				height: 100%;
+				margin: 0;
+				padding: 0;
+				left: 0;
+				top: 0;
+				display: flex;
+				flex-wrap: nowrap;
+				transition: 1s;
+				width: 2560px;/* noscript対策 必要か謎だけど*/
+			}
+			.container::after{
+				content: "";
+				display: block;
+				visibility : hidden;
+				width: 0;
+				height: 0;
+				clear: both;
+			}
+			.container > li{
+				float: left;
+				margin: 0;
+				padding: 0;
+				width: 1280px;/* noscript対策 */
+			}
+			.trigger{
+				display: flex;
+				position: absolute;
+				margin: 0;
+				padding: 0 10px;
+				height: 100%;
+				justify-content: center;
+				align-items: center;
+				font-size: 30px;
+				text-decoration: none;
+				background-color: rgba(0, 0, 0, 0.5);
+				color: rgb(255, 255, 255);
+			}
+			.trigger.disabled{
+				color: rgb(100, 100, 100);
+			}
+			.previous{
+				left: 0;
+			}
+			.next{
+				right: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="outer-wrapper jsc-wrapper">
+			<div class="carousel-wrapper">
+				<ul class="container jsc-container">
+					<li><img src="sampleimg/sample1.jpg" /></li>
+					<li><img src="sampleimg/sample2.jpg" /></li>
+					<li><img src="sampleimg/sample3.jpg" /></li>
+				</ul>
+				<a href="#" class="previous jsc-previous trigger disabled">&lt;</a>
+				<a href="#" class="next jsc-next trigger">&gt;</a>
+			</div>
+			<ul class="indicator-wrapper jsc-indicator-wrapper">
+				<li><a href="#" class="current">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+			</ul>
+		</div>
+		<div class="outer-wrapper jsc-wrapper">
+			<div class="carousel-wrapper">
+				<ul class="container jsc-container">
+					<li><img src="sampleimg/sample1.jpg" /></li>
+					<li><img src="sampleimg/sample2.jpg" /></li>
+					<li><img src="sampleimg/sample3.jpg" /></li>
+					<li><img src="sampleimg/sample4.jpg" /></li>
+				</ul>
+				<a href="#" class="previous jsc-previous trigger disabled">&lt;</a>
+				<a href="#" class="next jsc-next trigger">&gt;</a>
+			</div>
+			<ul class="indicator-wrapper jsc-indicator-wrapper">
+				<li><a href="#" class="current">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+			</ul>
+		</div>
+		<div class="outer-wrapper jsc-wrapper">
+			<div class="carousel-wrapper">
+				<ul class="container jsc-container">
+					<li><img src="sampleimg/sample1.jpg" /></li>
+					<li><img src="sampleimg/sample2.jpg" /></li>
+				</ul>
+				<a href="#" class="previous jsc-previous trigger disabled">&lt;</a>
+				<a href="#" class="next jsc-next trigger">&gt;</a>
+			</div>
+			<ul class="indicator-wrapper jsc-indicator-wrapper">
+				<li><a href="#" class="current">1</a></li>
+				<li><a href="#">2</a></li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+	var LEIHAUOLI = LEIHAUOLI || {};
+		LEIHAUOLI.TOP = {};
+		LEIHAUOLI.TOP.carousel = function($wrapper){
+			this.$wrapper = $wrapper;
+			this.currentIndex = 0;
+			this.init();
+		};
+		LEIHAUOLI.TOP.carousel.prototype = {
+			init : function(){
+				this.setParameters();
+				this.bindEvent();
+			},
+			setParameters : function(){
+				this.$container = this.$wrapper.find('.jsc-container');
+				this.$nextTrigger = this.$wrapper.find('.jsc-next');
+				this.$previousTrigger = this.$wrapper.find('.jsc-previous');
+				this.$indicatorWrapper = this.$wrapper.find('.jsc-indicator-wrapper');
+				this.$indicators = this.$indicatorWrapper.find('a');
+				this.imageWidth = this.$container.find('img').width();
+				this.$containerLi = this.$container.find('li');
+				this.maxIndex = this.$containerLi.length - 1;
+				this.$container.css('width' , this.imageWidth * this.maxIndex);
+				this.$containerLi.css('width', this.imageWidth);
+			},
+			bindEvent : function(){
+				this.$previousTrigger.on('click', this.slideToPrevious.bind(this));
+				this.$nextTrigger.on('click', this.slideToNext.bind(this));
+
+				this.$indicators.each(function(index){
+					$(this).on('click', function(){
+						myself.clickIndicator(event, index);
+					});
+				});
+			},
+			slideToPrevious : function(event){
+				event.preventDefault();
+				if(this.currentIndex == 0 || this.$container.is(':animated')) return;
+				this.currentIndex--
+				this.slideContainer();
+			},
+			slideToNext : function(event){
+				event.preventDefault();
+				if(this.currentIndex == this.maxIndex || this.$container.is(':animated')) return;
+				this.currentIndex++
+				this.slideContainer();
+			},
+			clickIndicator : function(event, index){
+				event.preventDefault();
+				if(this.currentIndex == this.index || this.$container.is(':animated')) return;
+				this.currentIndex = index;
+				this.slideContainer();
+			},
+			slideContainer : function(){
+				this.$container.css('transform', 'translateX(' + parseInt(this.currentIndex * this.imageWidth * -1) + 'px)');
+				if(this.currentIndex == 0){
+					this.$previousTrigger.addClass('disabled');
+				}else{
+					this.$previousTrigger.removeClass('disabled');
+				};
+				if(this.currentIndex == this.maxIndex){
+					this.$nextTrigger.addClass('disabled');
+				}else{
+					this.$nextTrigger.removeClass('disabled');
+				};
+				this.$indicators.removeClass('current');
+				this.$indicators.eq(this.currentIndex).addClass('current');
+			}
+		};
+		$(function(){
+			$('.jsc-wrapper').each(function(){
+				new LEIHAUOLI.TOP.carousel($(this));
+			});
+		});
+	</script>
+</html>

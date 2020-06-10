@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="/reset.css">
+		<title>ハンバーガーメニュー</title>
+		<style>
+			/* 一時的なスタイル */
+			body{
+				text-align: center;
+			}
+
+			main{
+				margin-top: 56px;
+			}
+
+			section{
+				height: 500px;
+			}
+			/* 一時的なスタイル */
+			.header{
+				position: fixed;
+				width: 100%;
+				margin-top: -56px;
+				height: 56px;
+				z-index: 9999;
+				display: flex;
+				justify-content: space-between;
+				background-color: brown;
+				align-items: center;
+			}
+
+			.logo{
+				margin-left: 50px;
+				transition: opacity 0.3s cubic-bezier(0.25, 0.25, 0.1, 1);
+			}
+
+			.logo:hover{
+				opacity: 0.8;
+			}
+
+			.header-menu{
+				display: flex;
+				font-family: 'Noto Sans JP', sans-serif;
+			}
+
+			.global-nav{
+				display: flex;
+			}
+
+			.header-list{
+				display: flex;
+			}
+
+			.header-list li{
+				display: flex;
+				align-items: center;
+				padding: 0 29px;
+				letter-spacing: -1px;
+				position: relative;
+			}
+
+			.header-list li a{
+				display: block;
+				height: 100%;
+				line-height: 56px;
+				text-decoration: none;
+				color: #333333;
+				font-weight: bold;
+				font-size: 14px;
+				letter-spacing: 0;
+				transition: 0.3s cubic-bezier(0.25, 0.25, 0.1, 1);
+			}
+
+			.header-list li:hover{
+				background-color: green;
+			}
+
+			.hamburger{
+				display: none;
+			}
+
+			.nav-indicator::after{
+				content: "";
+				top:0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				border-bottom: 2px solid green;
+			}
+
+			.nav-indicator{
+				background-color: cyan;
+			}
+
+			@media screen and (max-width: 1000px) {
+				/* 一時的なスタイル */
+				main{
+				margin-top: 50px;
+				}
+				/* 一時的なスタイル */
+				.nav-contact:hover{
+					color: #FFFFFF;
+				}
+				.header-list li:hover{
+					background-color: brown;
+				}
+				.header{
+					margin-top: -50px;
+					height: 50px;
+				}
+				.logo{
+					margin-left: 15px;
+				}
+				.global-nav{
+					display: block;
+				}
+				.hamburger{
+					width: 50px;
+					height: 50px;
+					position: relative;
+					cursor: pointer;
+					z-index: 1000;
+					display: inline-block;
+				}
+				.hamburger-line {
+					position: absolute;
+					left: 14px;
+					width: 22px;
+					height: 2px;
+					background-color: #231815;
+					transition: all .6s;
+				}
+				.hamburger-line:nth-child(1) {
+					top: 16px;
+				}
+				.hamburger-line:nth-child(2) {
+					transition: all 0s;
+					top: 24px;
+				}
+				.hamburger-line:nth-child(3) {
+					top: 32px;
+				}
+				.nav-open{
+					position: fixed;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					top: 50px;
+					width: 100%;
+					overflow: hidden;
+				}
+				.nav-open .hamburger-line:nth-child(1){
+					transform: translate3d(0,8px,0)rotate(45deg);
+				}
+				.nav-open .hamburger-line:nth-child(2){
+					width: 0;
+				}
+				.nav-open .hamburger-line:nth-child(3){
+					transform: translate3d(0,-8px,0)rotate(-45deg);
+				}
+				.header-list {
+					position: fixed;
+					right: -100vw;
+					width: 100vw;
+					height: 100vh;
+					background-color: #FFFFFF;
+					transition: all .6s;
+					z-index: 200;
+					overflow-y: auto;
+					display: block;
+				}
+				.nav-open .header-list {
+					transform: translate3d(-100vw,0,0);
+				}
+				.header-list{
+					margin: 0 auto;
+					padding: 110px 60px 0;
+				}
+				.header-list li {
+					margin: auto;
+					padding: 0;
+					list-style: none;
+					display: block;
+				}
+				.header-list li a {
+					color: #231815;
+					padding: 22.5px 0;
+					font-size: 20px;
+					height: 100%;
+				}
+			}
+		/* .black-bg {
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 100vw;
+			height: 100vh;
+			z-index: 100;
+			background-color: #000;
+			opacity: 0;
+			visibility: hidden;
+			transition: all .6s;
+			cursor: pointer;
+		}
+		.nav-open .black-bg {
+			opacity: .8;
+			visibility: visible;
+		} */
+			</style>
+		</head>
+	<body>
+		<header class="header jsc-header">
+			<a href="#" class="jsc-smooth"><img class="logo" src="/sampleimg/toggle-icon.png" alt="ロゴ"></a>
+			<div class="header-menu">
+				<nav class="global-nav">
+					<ul class="header-list jsc-header-list">
+						<li><a class="jsc-smooth" href="#service">SERVICE</a></li>
+						<li><a class="jsc-smooth" href="#member">MEMBER</a></li>
+						<li><a class="jsc-smooth" href="#message">MESSAGE</a></li>
+						<li><a class="jsc-smooth" href="#about">ABOUT US</a></li>
+					</ul>
+				</nav>
+				<div class="jsc-hamburger hamburger">
+					<span class="hamburger-line"></span>
+					<span class="hamburger-line"></span>
+					<span class="hamburger-line"></span>
+				</div>
+				<div class="black-bg jsc-black-bg"></div>
+			</div>
+		</header>
+		<main class="jsc-header-indicate-main">
+			<section id="service">service</section>
+			<section id="member">member</section>
+			<section id="message">message</section>
+			<section id="about">about us</section>
+		</main>
+		<script src="jquery-3.3.1.min.js"></script>
+		<script>
+			var spAction = {
+				init: function(){
+					this.setParameters();
+					this.bindEvents();
+				},
+				setParameters: function () {
+					this.brakePoint = 750;
+				},
+				bindEvents: function(){
+					this.judge();
+				},
+				judge: function () {
+					if($(window).width() <= this.brakePoint){
+						return true;
+					}else{
+						return false;
+					};
+				}
+			}
+
+			var hamburgerAct = {
+				init: function(){
+					this.setParameters();
+					this.bindEvents();
+				},
+				setParameters: function () {
+					this.body = document.body;
+					this.$hamburger = $('.jsc-hamburger');
+					this.$navItem = $('.jsc-header-list').find('a');
+					// this.$blackBg = $('.jsc-black-bg');
+					this.headerHeight = $('.jsc-header').outerHeight();
+				},
+				bindEvents: function () {
+					var myself = this;
+					this.$hamburger.on('click', function () {
+					myself.positionSave();
+					myself.navOpen();
+					myself.positionInsert();
+					});
+					this.$navItem.on('click', function () {
+						myself.navClose();
+					});
+					// this.$blackBg.on('click', function () {
+					// 	myself.navClose();
+					// });
+					this.positionFix();
+				},
+				navOpen: function () {
+					this.body.classList.toggle('nav-open');
+				},
+				navClose: function () {
+					this.body.classList.remove('nav-open');
+				},
+				positionSave: function () {
+					if(!$('body,html').hasClass('nav-open')){
+						this.top = $(window).scrollTop();
+					}
+				},
+				positionInsert: function () {
+					if($('body,html').hasClass('nav-open')){
+						$('.nav-open').css('top', -this.top+'px');
+						$('.jsc-header').css('top', this.headerHeight+'px');
+					}
+					if(!$('body,html').hasClass('nav-open')){
+						$('body,html').animate({ scrollTop: this.top }, 0);
+					}
+				},
+				positionFix: function () {
+					$(window).on('resize',function(){
+						if(!spAction.judge()){
+							this.headerHeight = $('.jsc-header').outerHeight();
+							$('.jsc-header').css('top', this.headerHeight+'px');
+						}
+					})
+				}
+			};
+
+			var headerIndicator = {//最後のsectionが小さい場合には、最後のアクティブだけ条件を変える必要がある。
+				init: function(){
+					this.setParameters();
+					this.bindEvents();
+				},
+				setParameters: function () {
+					this.$window = $(window);
+					this.$activeNav = $('.jsc-header-list').children('li');
+					this.$activeSection = $('.jsc-header-indicate-main').children('section');
+				},
+				bindEvents: function () {
+					var myself = this;
+					$(window).on('scroll resize', function () {
+						myself.headerActive();
+					})
+				},
+				headerActive: function () {
+					this.windowTop = this.$window.scrollTop();
+					this.headerHight = $('.jsc-header').outerHeight();
+					var myself = this;
+					this.$activeSection.each(function(index){
+						var offset = $(this).offset();
+						var top = offset.top-myself.headerHight;
+						if (myself.windowTop >= top) {
+							myself.$activeNav.removeClass("nav-indicator");
+							myself.$activeNav.eq(index).addClass("nav-indicator");
+						}
+					})
+				}
+			};
+			var smoothScroll = {
+				speed: 500,
+				init: function(){
+					this.setParameters();
+					this.bindEvents();
+				},
+				setParameters: function () {
+					this.headerHight = $('.jsc-header').outerHeight();
+				},
+				bindEvents: function () {
+					var myself = this;
+					$('.jsc-smooth').click(function () {
+						myself.scroll($(this));
+					});
+				},
+				scroll: function ($this) {
+					if ($('body, html').is(':animated')) return;
+						this.href = $this.attr("href");
+						this.target = $(this.href == "#" || this.href == "" ? 'html' : this.href);
+						this.position = this.target.offset().top - this.headerHight+1;
+						$('body,html').animate({ scrollTop: this.position }, this.speed, 'swing');
+						return false;
+				}
+			};
+			$(window).on('load', function () {
+				spAction.init();
+				hamburgerAct.init();
+				headerIndicator.init();
+				smoothScroll.init();
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/reset.css">
+    <title>ClickZoom</title>
+</head>
+<body>
+    <a href="#" class="jsc-dialog">
+        <figure class="post-image-container">
+            <figcaption class="jsc-post-title"></figcaption>
+            <div>
+                <img src="/sampleimg/sample1.jpg" class="jsc-post-image"/>
+            </div>
+        </figure>
+        <dl class="post-point-container">
+            <div>
+                <dt>view</dt>
+                <dd class="jsc-post-view"></dd>
+            </div>
+            <div>
+                <dt>like</dt>
+                <dd class="jsc-post-like"></dd>
+            </div>
+        </dl>
+    </a>
+    <div class="dialog-container jsc-dialog-container">
+		<div>
+			<img src="" alt="" class="jsc-dialog-image"/>
+			<a class="dialog-close-trigger jsc-dialog-close-trigger" href="#">×</a>
+		</div>
+	</div>
+    <script>
+        var zoom = {
+            init : function(){
+                var $dialog = $('.jsc-dialog');
+                var $dialogContainer = $('.jsc-dialog-container');
+                var $imageUrl = $('.jsc-dialog-image');
+                $dialog.on('click', function(){
+                    event.preventDefault();
+                    var $self = $(this);
+                    var $image = $self.find('.jsc-post-image');
+                    var src = $image.attr('src');
+                    var alt = $image.attr('alt');
+
+                    if(src.length == 0){
+                        return;
+                    };
+                    $imageUrl.attr({'src' : src, 'alt' : alt});
+                    $dialogContainer.fadeIn();
+                });
+
+                var $dialogCloseTrigger = $('.jsc-dialog-close-trigger');
+                $dialogContainer.on('click', function(){
+                    event.preventDefault();
+                    $dialogContainer.fadeOut();
+                });
+                $imageUrl.on('click', function(event){
+                    event.stopPropagation();
+                });
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="../common/css/reset.css">
+	<style>
+		ul.pan_list{
+			display: flex;
+			flex-wrap: wrap;
+			overflow: scroll;
+			white-space: nowrap;
+			padding: 15px 0 15px 15px;
+		}
+		li{
+			font-size: 14px;
+		}
+/* 疑似要素は正式には「:after」ではなく、「::after」と記述する。                   */
+/* >は両端のテキストと中央揃えにするため、vertial-alignを適切に設定する必要がある。*/
+		.pan_list li:not(:last-child):after{
+			content:">";
+			font-size: 5px;
+			margin: 0 10px;
+			
+		}
+		.pan_list a{
+			text-decoration: none;
+			color: #999999;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+<!-- パンくずリストは、サイトのトップから現在のページへの階層を表現している。                  -->
+<!-- 階層の順番は、そのサイトの仕様によって決まっているため、順番を勝手に変えることはできない。-->
+<!-- 例えば「top > 今日の出来事 > blog」のように記述すると、サイトの構造と異なってしまう。     -->
+<!-- このように、順番を変更すると意味的に正しくなくなるような場合は、ulではなくolを使用する。  -->
+<!-- 尚、ulはunordered list(順番のないリスト)、olはordered list(順番のあるリスト)の略。        -->
+		<ul class="pan_list">
+			<li><a href="#">top</a></li>
+			<li><a href="#">blog</a></li>
+			<li>2019/11/26 今日の出来事</li>
+		</ul>
+	</div>
+</body>
+
+</html>

@@ -299,6 +299,7 @@
 				},
 				positionInsert: function () {
 					if($('body,html').hasClass('nav-open')){
+						this.headerHeight = $('.jsc-header').outerHeight();
 						$('.nav-open').css('top', -this.top+'px');
 						$('.jsc-header').css('top', this.headerHeight+'px');
 					}
@@ -308,8 +309,10 @@
 				},
 				positionFix: function () {
 					$(window).on('resize',function(){
-						if(!spAction.judge()){
+						this.headerHeight2 = $('.jsc-header').outerHeight();
+						if(this.headerHeight !== this.headerHeight2){
 							this.headerHeight = $('.jsc-header').outerHeight();
+							this.headerHeight = this.headerHeight2
 							$('.jsc-header').css('top', this.headerHeight+'px');
 						}
 					})

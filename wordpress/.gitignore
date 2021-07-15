@@ -1,1 +1,10 @@
-.env
+# config files
+.*
+
+# wordpress
+/wp-content/*
+!wp-content/themes/
+wp-content/themes/index.php
+wp-content/themes/twenty*/
+
+/node_modules/

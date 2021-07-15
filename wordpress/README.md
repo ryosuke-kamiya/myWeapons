@@ -10,6 +10,9 @@
 
 環境を削除する場合は、`docker-compose down`を実行してください。
 
+管理画面の設定 → パーマリンク設定 → 投稿名 → 変更を保存
+にしないとページが表示されない。
+
 # おすすめプラグイン
 
 [Advanced Editor Tools (旧名 TinyMCE Advanced)](https://ja.wordpress.org/plugins/tinymce-advanced/)
@@ -26,3 +29,10 @@ SMTP 認証
 初期 URL を変更
 [WP Maintenance Mode](https://ja.wordpress.org/plugins/wp-maintenance-mode/)
 公開中のサイトをメンテナンスモードにできる
+
+# 注意事項
+
+カスタム投稿タイプの一覧ページや、詳細ページを作る際には、
+archive-{カスタム投稿タイプの名前}.php
+single-{カスタム投稿タイプの名前}.php
+というファイルを作成する。

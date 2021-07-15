@@ -1,0 +1,56 @@
+/*
+Theme Name: MOCK
+Author: 私
+Author URI: なし
+Version: 1.0
+*/
+
+/* リセットCSS */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ul,
+ol,
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+p {
+  word-break: break-word;
+}
+input[type=submit] {
+  -webkit-appearance: none;
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #EEEEEE inset;
+  -webkit-text-fill-color: #4A4A4A!important;
+}
+textarea{
+  resize: none;
+  -webkit-appearance: none;
+  outline: none;
+  border: none;
+}
+select{
+  outline: none;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+button{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}

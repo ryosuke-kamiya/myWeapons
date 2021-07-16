@@ -114,7 +114,15 @@ import { button } from "@/atoms";
 react、node-sass のようにすべての sass を index.sass にまとめて、それを各頁で import するという方法は Next の仕様上取れない。
 base を全体に反映させるためには、各頁ではなく app.tsx に読み込ませる必要がある。ただしその方法は styles が機能しない。機能する方法があるなら知りたい。
 
-sass は node-sass ではなく、sass を利用しているため、@use を使う。
+→ 別のやり方
+sass のフォルダを一つ作り、その中に全てまとめる。
+
+各ファイルは、`@use 'styles/utils/color.module.scss' as color;`このように必要な変数や mixin のみ取り入れる。（sass は node-sass ではなく、sass を利用しているため、@use を使う。）
+親コンポーネントに props で className を渡すことで、親コンポーネントごとにスタイルの指定を可能にする。
+\_app.tsx に
+`import '@styles/reset.css';`
+`import '@styles/globals.scss';`
+をして、全体のスタイルを適用させる。
 
 ### Mixin
 

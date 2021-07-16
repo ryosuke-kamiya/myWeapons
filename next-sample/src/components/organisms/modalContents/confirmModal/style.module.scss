@@ -1,0 +1,11 @@
+@import "~/styles/color";
+.confirmModal {
+  text-align: center;
+  .buttonWrapper {
+    display: flex;
+    .cancel {
+      cursor: pointer;
+      flex-grow: 1;
+    }
+  }
+}

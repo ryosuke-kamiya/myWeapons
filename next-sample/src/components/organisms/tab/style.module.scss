@@ -1,0 +1,14 @@
+// @use '~/styles/base.scss';
+@import "~/styles/color";
+@import "~/styles/mixin";
+.tabWrapper {
+  display: flex;
+  .tab {
+    flex-grow: 1;
+    cursor: pointer;
+    &.active {
+      color: white;
+      background-color: $green;
+    }
+  }
+}

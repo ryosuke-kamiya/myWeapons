@@ -1,0 +1,15 @@
+*,
+*:before,
+*:after {
+	/* font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro", sans-serif; */
+	box-sizing: border-box;
+}
+
+button {
+	outline: none;
+}
+.bodyFixed {
+	position: fixed;
+	left: 0;
+	right: 0;
+}

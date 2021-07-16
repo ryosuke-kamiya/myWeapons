@@ -1,0 +1,10 @@
+@use '~/styles/base.scss';
+@import "~/styles/color";
+@import "~/styles/mixin";
+//ここにはError固有のsassを記入する。
+.error {
+  text-align: center;
+  .errorText {
+    color: red;
+  }
+}

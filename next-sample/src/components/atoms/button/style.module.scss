@@ -1,0 +1,22 @@
+@import "~/styles/color";
+@import "~/styles/mixin";
+
+.button {
+  display: inline-block;
+  color: black;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 25px; //heightの半分
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+
+  &.green {
+    background-color: $green;
+  }
+  &.disabled {
+    box-shadow: none;
+    background-color: gray;
+  }
+}

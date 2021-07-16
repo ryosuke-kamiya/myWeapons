@@ -1,0 +1,40 @@
+@import "~/styles/color";
+@import "~/styles/mixin";
+
+.modalWrapper {
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .modalBackground {
+    opacity: 0.5; //仮入れ
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200vh;
+    transform: translateY(-50%);
+    background-color: gray; //仮入れ
+  }
+  .modal {
+    z-index: 1;
+    max-width: 95%; //仮入れ
+    max-height: 95%; //仮入れ
+    overflow-y: auto;
+    background-color: $white;
+    border-radius: 19px;
+  }
+}
+
+@include sp {
+  .modalWrapper {
+    flex-direction: column;
+  }
+}

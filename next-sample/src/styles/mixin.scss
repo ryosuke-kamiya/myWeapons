@@ -1,0 +1,7 @@
+@import "~/styles/color";
+
+@mixin sp {
+  @media screen and (max-width: 560px) {
+    @content;
+  }
+}

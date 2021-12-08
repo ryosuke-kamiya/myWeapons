@@ -21,7 +21,8 @@ if ($taxonomy_tag) {
 }
 ?>
 <?php
-query_posts(
+query_posts( //現在非推奨
+    //https://qiita.com/_ruka_/items/e14280d34eddf49efad1
     array(
         'paged' => $current_page,
         'post_type' => 'custompost',
@@ -39,51 +40,50 @@ query_posts(
 <section>
     <h1>一覧</h1>
     <?php if (have_posts()) : ?>
-    <p class="result">
-        <?php if ($wp_query->found_posts < $current_page * $max_count) : ?>
-        <?php echo strval($wp_query->found_posts); ?>/<?php echo $wp_query->found_posts; ?>
-        <?php else : ?>
-        <?php echo strval($current_show + $max_count - 1); ?>/<?php echo $wp_query->found_posts; ?>
-        <?php endif; ?>
-    </p>
-    <div>
-        <?php get_sidebar() ?>
+        <p class="result">
+            <?php if ($wp_query->found_posts < $current_page * $max_count) : ?>
+                <?php echo strval($wp_query->found_posts); ?>/<?php echo $wp_query->found_posts; ?>
+            <?php else : ?>
+                <?php echo strval($current_show + $max_count - 1); ?>/<?php echo $wp_query->found_posts; ?>
+            <?php endif; ?>
+        </p>
         <div>
-            <?php while (have_posts()) : the_post(); ?>
+            <?php get_sidebar() ?>
             <div>
-                <div>
-                    <a
-                        href="<?php the_permalink(); ?>?<?php echo $_SERVER['QUERY_STRING']; ?>"><?php the_title(); ?></a>
-                    <p>
-                        <?php echo get_the_content(); ?>
-                    </p>
+                <?php while (have_posts()) : the_post(); ?>
                     <div>
-                        <div>タクソノミー</div>
-                        <ul>
-                            <?php
+                        <div>
+                            <a href="<?php the_permalink(); ?>?<?php echo $_SERVER['QUERY_STRING']; ?>"><?php the_title(); ?></a>
+                            <p>
+                                <?php echo get_the_content(); ?>
+                            </p>
+                            <div>
+                                <div>タクソノミー</div>
+                                <ul>
+                                    <?php
                                     $terms = wp_get_post_terms(get_the_id(), 'taxonomy', array('orderby' => 'term_order'));
                                     foreach ($terms as $term) :
                                     ?>
-                            <li><?php echo htmlspecialchars($term->name); ?></li>
-                            <?php
+                                        <li><?php echo htmlspecialchars($term->name); ?></li>
+                                    <?php
                                     endforeach;
                                     ?>
-                        </ul>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <?php endwhile; ?>
-            <?php
+                <?php endwhile; ?>
+                <?php
                 if (function_exists('pagination')) {
                     pagination();
                 } ?>
+            </div>
         </div>
-    </div>
     <?php else : ?>
-    <p>0/0</p>
-    <div>
-        <?php get_sidebar() ?>
-    </div>
+        <p>0/0</p>
+        <div>
+            <?php get_sidebar() ?>
+        </div>
     <?php endif;
     wp_reset_query(); ?>
 </section>
